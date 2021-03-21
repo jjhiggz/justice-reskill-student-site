@@ -2,12 +2,27 @@
 import NavDropdown from "react-bootstrap/NavDropdown";
 import Navbar from "react-bootstrap/Navbar";
 import Nav from "react-bootstrap/Nav";
+
 // Import LinkContainer to use Links with React Router
 import { LinkContainer } from "react-router-bootstrap";
+
 // import logo
 import justiceReskillLogo from "../Assets/justicereskill_logo.png";
 
+import { useEffect, useState } from "react";
+import axios from "axios";
+
+const dbURL = "https://justice-reskill.herokuapp.com";
+
 export default function Header() {
+	const [courses, setCourses] = useState([]);
+
+	useEffect(() => {
+		axios(dbURL + "/courses")
+			.then((result) => result.data)
+			.then(setCourses);
+	}, []);
+
 	return (
 		<Navbar bg="light" expand="lg" fixed="top">
 			<Navbar bg="light">
@@ -26,19 +41,25 @@ export default function Header() {
 			<Navbar.Toggle aria-controls="basic-navbar-nav" />
 			<Navbar.Collapse id="basic-navbar-nav">
 				<Nav>
-					<LinkContainer to="search-for-lesson">
+					<LinkContainer to="/search-for-lesson">
 						<Nav.Link>Search For Lesson</Nav.Link>
 					</LinkContainer>
-					<LinkContainer to="search-for-video">
+					<LinkContainer to="/search-for-video">
 						<Nav.Link href="#link">Search For Video</Nav.Link>
 					</LinkContainer>
 					<NavDropdown title="Courses" id="basic-nav-dropdown">
-						<NavDropdown.Item href="#action/3.1">Frontend</NavDropdown.Item>
-						<NavDropdown.Item href="#action/3.2">
-							Frontend (React)
-						</NavDropdown.Item>
-						<NavDropdown.Item href="#action/3.3">Backend</NavDropdown.Item>
-						<NavDropdown.Item href="#action/3.4">FullStack</NavDropdown.Item>
+						{courses.map((course) => {
+							return (
+								<LinkContainer
+									key={course.id}
+									to={`/course/${course.title.split(" ").join("-")}-${
+										course.id
+									}`}
+								>
+									<NavDropdown.Item>{course.title}</NavDropdown.Item>
+								</LinkContainer>
+							);
+						})}
 					</NavDropdown>
 				</Nav>
 			</Navbar.Collapse>

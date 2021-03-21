@@ -3,7 +3,12 @@ import { createYoutubeLink } from "../Functions/helpers";
 
 export default function VideoCard({ video }) {
 	return (
-		<Card variant="top" border="secondary" style={{ width: "18rem" }}>
+		<Card
+			className="card"
+			variant="top"
+			border="secondary"
+			style={{ width: "18rem" }}
+		>
 			<iframe
 				src={createYoutubeLink(video.link)}
 				frameBorder="0"
@@ -11,7 +16,7 @@ export default function VideoCard({ video }) {
 				allowFullScreen
 				title={video.title}
 			></iframe>
-			<Card.Body>
+			<Card.Body className="card-text-container">
 				<a href={video.link}>
 					<Card.Title>{video.title}</Card.Title>
 				</a>
