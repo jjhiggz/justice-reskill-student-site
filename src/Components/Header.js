@@ -1,5 +1,6 @@
 // Import react-bootstrap components
 import NavDropdown from "react-bootstrap/NavDropdown";
+import Button from "react-bootstrap/Button";
 import Navbar from "react-bootstrap/Navbar";
 import Nav from "react-bootstrap/Nav";
 
@@ -14,7 +15,7 @@ import axios from "axios";
 
 const dbURL = "https://justice-reskill.herokuapp.com";
 
-export default function Header() {
+export default function Header({ setShowSignIn, setShowSignUp }) {
 	const [courses, setCourses] = useState([]);
 
 	useEffect(() => {
@@ -62,6 +63,22 @@ export default function Header() {
 						})}
 					</NavDropdown>
 				</Nav>
+				<div>
+					<Button onClick={() => setShowSignIn(true)} variant="outline-success">
+						Sign In
+					</Button>
+				</div>
+
+				<div>
+					<Button
+						onClick={() => {
+							setShowSignUp(true);
+						}}
+						variant="outline-success"
+					>
+						Sign Up( Teachers Only )
+					</Button>
+				</div>
 			</Navbar.Collapse>
 		</Navbar>
 	);
