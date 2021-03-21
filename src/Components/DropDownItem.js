@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { LinkContainer } from "react-router-bootstrap";
-import { makeQueryParams, makeQueryString } from "../Functions/helpers";
+import { makeQueryString } from "../Functions/helpers";
 
 import axios from "axios";
 const dbURL = "https://justice-reskill.herokuapp.com";
@@ -14,7 +14,7 @@ export default function DropDownItem({ mod }) {
 			.then((module) => {
 				setLearningObjectives(module.learning_objectives);
 			});
-	}, [learningObjectives]);
+	}, [learningObjectives, mod.id]);
 	return (
 		<>
 			<div className="dropdown-container">
@@ -28,6 +28,7 @@ export default function DropDownItem({ mod }) {
 				</LinkContainer>
 
 				<div className={`dropdown-items-container ${!isOpen ? "hide" : ""}`}>
+					<p>learning objectives: </p>
 					{learningObjectives.map((learningObjective, index) => (
 						<LinkContainer
 							key={learningObjective.id}

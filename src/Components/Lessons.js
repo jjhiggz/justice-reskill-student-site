@@ -8,7 +8,7 @@ export default function Lessons({ lessons }) {
 	return (
 		<div className="lessons-container">
 			{lessons.length > 0 ? (
-				<Table striped bordered hover>
+				<Table className="lessons-table" striped bordered hover>
 					<thead>
 						<tr>
 							<th>Title</th>

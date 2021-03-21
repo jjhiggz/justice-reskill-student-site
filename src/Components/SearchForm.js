@@ -32,7 +32,7 @@ export default function SearchForm({
 			>
 				<Col>
 					<Form.Control
-						placeholder="tag, videoname, search term, etc..."
+						placeholder="tag, search term, etc..."
 						value={searchTerm}
 						onChange={(event) => {
 							setSearchTerm(event.target.value);
