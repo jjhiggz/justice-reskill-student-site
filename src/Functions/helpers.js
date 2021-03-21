@@ -53,3 +53,15 @@ function countSubstringInString(string, substring) {
 function isPrimitive(test) {
 	return test !== Object(test);
 }
+
+export function getIdNo(param) {
+	return param.split("-")[param.split("-").length - 1];
+}
+
+export function makeQueryParams({ key, object }) {
+	return key + "=" + object.title.split(" ").join("-") + "-" + object.id;
+}
+
+export function makeQueryString() {
+	return [...arguments].map(makeQueryParams).join("&");
+}

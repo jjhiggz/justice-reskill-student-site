@@ -27,10 +27,15 @@
 	padding: 3px;
 }
 
+.right-of-sidebar {
+	margin-left: 250px;
+	padding: 20px;
+}
+
 #sidebar {
 	margin-top: 85px;
 	height: 100%;
-	width: 180px;
+	width: 250px;
 	position: fixed;
 	z-index: 1;
 	top: 0;
