@@ -1,4 +1,4 @@
-import { HashRouter as Router, Switch, Route } from "react-router-dom";
+import { HashRouter, Switch, Route } from "react-router-dom";
 
 import Home from "./Views/Home";
 import SearchForLesson from "./Views/SearchForLesson";
@@ -15,7 +15,7 @@ import "./App.css";
 function App() {
 	return (
 		<div className="App">
-			<Router>
+			<HashRouter>
 				<Header />
 				<section id="main-container">
 					<Switch>
@@ -25,7 +25,7 @@ function App() {
 						<Route path="/search-for-lesson" component={SearchForLesson} />
 					</Switch>
 				</section>
-			</Router>
+			</HashRouter>
 		</div>
 	);
 }
