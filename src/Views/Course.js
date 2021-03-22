@@ -61,7 +61,11 @@ export default function Course() {
 	return (
 		<div className="page-content-container">
 			<section className="right-of-sidebar">
-				<CreateMod onHide={setShowCreateMod} show={showCreateMod} />
+				<CreateMod
+					onHide={setShowCreateMod}
+					course={course}
+					show={showCreateMod}
+				/>
 				<CreateLesson onHide={setShowCreateLesson} show={showCreateLesson} />
 				<CreateLearningObjective
 					onHide={setShowCreateLearningObjective}
