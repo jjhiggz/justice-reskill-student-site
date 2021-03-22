@@ -1,4 +1,5 @@
 import { VscAdd } from "react-icons/vsc";
+import { IoTrashBin } from "react-icons/io5";
 import { useState, useEffect } from "react";
 import { LinkContainer } from "react-router-bootstrap";
 import { makeQueryString } from "../Functions/helpers";
@@ -10,6 +11,8 @@ export default function DropDownItem({
 	mod,
 	setShowCreateLearningObjective,
 	setShowCreateLesson,
+	setLearningObjective,
+	setMod,
 }) {
 	const [isOpen, setIsOpen] = useState(false);
 	const [learningObjectives, setLearningObjectives] = useState([]);
@@ -33,8 +36,10 @@ export default function DropDownItem({
 						<h4 className="dropdown-button-text">{mod.title}</h4>
 					</div>
 				</LinkContainer>
+				<IoTrashBin />
 				<VscAdd
 					onClick={() => {
+						setMod(mod);
 						setShowCreateLearningObjective(true);
 					}}
 				/>
@@ -53,8 +58,16 @@ export default function DropDownItem({
 							}
 						>
 							<div>
-								<p className="dropdown-item">{learningObjective.title} </p>
-								<VscAdd onClick={() => setShowCreateLesson(true)} />
+								<p className="dropdown-item">
+									{learningObjective.title}{" "}
+									<IoTrashBin
+										onClick={(event) => {
+											event.stopPropagation();
+											console.log("deleting");
+											console.log(learningObjective.title);
+										}}
+									/>
+								</p>
 							</div>
 						</LinkContainer>
 					))}

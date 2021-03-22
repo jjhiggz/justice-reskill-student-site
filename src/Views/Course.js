@@ -16,7 +16,6 @@ const dbURL = "https://justice-reskill.herokuapp.com";
 export default function Course() {
 	const queryParams = useQuery();
 	const courseIdNo = getIdNo(useParams().courseId);
-	// const modId = queryParams.get("mod") ? getIdNo(queryParams.get("mod")) : null;
 	const learningObjectiveId = queryParams.get("learning-objective")
 		? getIdNo(queryParams.get("learning-objective"))
 		: null;
@@ -28,12 +27,19 @@ export default function Course() {
 		showCreateLearningObjective,
 		setShowCreateLearningObjective,
 	] = useState(false);
+
 	const [showCreateLesson, setShowCreateLesson] = useState(false);
 
 	const [learningObjective, setLearningObjective] = useState({
 		title: "Please Select a Learning Objective",
 		description: "Once you select a learning objective this page will populate",
 		lessons: [],
+	});
+
+	const [mod, setMod] = useState({
+		title: "Loading",
+		description: "Loading",
+		number: "loading",
 	});
 
 	// initially load up course
@@ -66,12 +72,20 @@ export default function Course() {
 					course={course}
 					show={showCreateMod}
 				/>
-				<CreateLesson onHide={setShowCreateLesson} show={showCreateLesson} />
+				<CreateLesson
+					learningObjective={learningObjective}
+					onHide={setShowCreateLesson}
+					show={showCreateLesson}
+				/>
 				<CreateLearningObjective
+					mod={mod}
 					onHide={setShowCreateLearningObjective}
 					show={showCreateLearningObjective}
 				/>
-				<LearningObjective learningObjective={learningObjective} />
+				<LearningObjective
+					setShowCreateLesson={setShowCreateLesson}
+					learningObjective={learningObjective}
+				/>
 			</section>
 
 			<section id="sidebar">
@@ -93,6 +107,8 @@ export default function Course() {
 						mod={mod}
 						setShowCreateLearningObjective={setShowCreateLearningObjective}
 						setShowCreateLesson={setShowCreateLesson}
+						setLearningObjective={setLearningObjective}
+						setMod={setMod}
 					/>
 				))}
 			</section>
