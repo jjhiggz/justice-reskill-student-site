@@ -1,10 +1,16 @@
 import Table from "react-bootstrap/Table";
+import Button from "react-bootstrap/Button";
 import { GoMarkGithub } from "react-icons/go";
 import { FiYoutube } from "react-icons/fi";
 import { CgLoadbarDoc } from "react-icons/cg";
 import { FaFilePowerpoint } from "react-icons/fa";
+import { IoTrashBin } from "react-icons/io5";
+import { VscAdd } from "react-icons/vsc";
+import { AppState } from "../App";
+import { useContext } from "react";
 
 export default function Lessons({ lessons }) {
+	const { state, dispatch } = useContext(AppState);
 	return (
 		<div className="lessons-container">
 			{lessons.length > 0 ? (
@@ -60,6 +66,19 @@ export default function Lessons({ lessons }) {
 									)}
 								</td>
 								<td>{lesson.description}</td>
+								{state.loggedIn ? (
+									<td>
+										<Button variant="danger">
+											<IoTrashBin
+												onClick={() =>
+													dispatch({ type: "setLesson", payload: lesson })
+												}
+											/>
+										</Button>
+									</td>
+								) : (
+									""
+								)}
 							</tr>
 						))}
 					</tbody>

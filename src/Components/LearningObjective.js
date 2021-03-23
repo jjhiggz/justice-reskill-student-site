@@ -1,11 +1,11 @@
 import Lessons from "./Lessons";
 import { VscAdd } from "react-icons/vsc";
 import { ButtonGroup, Button } from "react-bootstrap";
+import { AppState } from "../App";
+import { useContext } from "react";
 
-export default function LearningObjective({
-	setShowCreateLesson,
-	learningObjective,
-}) {
+export default function LearningObjective({ learningObjective }) {
+	const { state, dispatch } = useContext(AppState);
 	const { lessons } = learningObjective;
 
 	return (
@@ -14,15 +14,19 @@ export default function LearningObjective({
 			<p>{learningObjective.description}</p>
 			<Lessons lessons={lessons} />
 			{learningObjective.id ? (
-				<ButtonGroup>
-					<Button
-						onClick={() => {
-							setShowCreateLesson(true);
-						}}
-					>
-						<VscAdd />
-					</Button>
-				</ButtonGroup>
+				state.loggedIn ? (
+					<ButtonGroup>
+						<Button
+							onClick={() => {
+								dispatch({ type: "showCreateLesson" });
+							}}
+						>
+							<VscAdd />
+						</Button>
+					</ButtonGroup>
+				) : (
+					""
+				)
 			) : (
 				""
 			)}

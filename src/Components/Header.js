@@ -3,19 +3,15 @@ import NavDropdown from "react-bootstrap/NavDropdown";
 import Button from "react-bootstrap/Button";
 import Navbar from "react-bootstrap/Navbar";
 import Nav from "react-bootstrap/Nav";
-
-// Import LinkContainer to use Links with React Router
 import { LinkContainer } from "react-router-bootstrap";
-
-// import logo
 import justiceReskillLogo from "../Assets/justicereskill_logo.png";
-
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import axios from "axios";
-
+import { AppState } from "../App";
 const dbURL = "https://justice-reskill.herokuapp.com";
 
-export default function Header({ setShowSignIn, setShowSignUp }) {
+export default function Header() {
+	const { dispatch, state } = useContext(AppState);
 	const [courses, setCourses] = useState([]);
 
 	useEffect(() => {
@@ -64,7 +60,10 @@ export default function Header({ setShowSignIn, setShowSignUp }) {
 					</NavDropdown>
 				</Nav>
 				<div>
-					<Button onClick={() => setShowSignIn(true)} variant="outline-success">
+					<Button
+						onClick={() => dispatch({ type: "showSignIn" })}
+						variant="outline-success"
+					>
 						Sign In
 					</Button>
 				</div>
@@ -72,7 +71,7 @@ export default function Header({ setShowSignIn, setShowSignUp }) {
 				<div>
 					<Button
 						onClick={() => {
-							setShowSignUp(true);
+							dispatch({ type: "showSignUp" });
 						}}
 						variant="outline-success"
 					>

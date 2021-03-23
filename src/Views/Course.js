@@ -1,19 +1,21 @@
 import { useParams } from "react-router-dom";
 import useQuery from "../CustomHooks/UseQuery";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { getIdNo } from "../Functions/helpers";
 import axios from "axios";
-import DropDownItem from "../Components/DropDownItem";
 import LearningObjective from "../Components/LearningObjective";
 import { VscAdd } from "react-icons/vsc";
 import { ButtonGroup, Button } from "react-bootstrap";
+import DropDownItem from "../Components/DropDownItem";
+import DestroyLesson from "../Components/DestroyLesson";
 import CreateMod from "../Components/CreateMod";
 import CreateLearningObjective from "../Components/CreateLearningObjective";
 import CreateLesson from "../Components/CreateLesson";
-
+import { AppState } from "../App";
 const dbURL = "https://justice-reskill.herokuapp.com";
 
 export default function Course() {
+	const { state, dispatch } = useContext(AppState);
 	const queryParams = useQuery();
 	const courseIdNo = getIdNo(useParams().courseId);
 	const learningObjectiveId = queryParams.get("learning-objective")
@@ -74,32 +76,38 @@ export default function Course() {
 				/>
 				<CreateLesson
 					learningObjective={learningObjective}
-					onHide={setShowCreateLesson}
-					show={showCreateLesson}
+					onHide={() => dispatch({ type: "hideCreateLesson" })}
+					show={state.showCreateLesson}
 				/>
 				<CreateLearningObjective
 					mod={mod}
 					onHide={setShowCreateLearningObjective}
 					show={showCreateLearningObjective}
 				/>
-				<LearningObjective
-					setShowCreateLesson={setShowCreateLesson}
-					learningObjective={learningObjective}
+				<DestroyLesson
+					show={Object.keys(state.lesson).length > 0}
+					onHide={() => dispatch({ type: "setLesson", payload: {} })}
+					lesson={state.lesson}
 				/>
+				<LearningObjective learningObjective={learningObjective} />
 			</section>
 
 			<section id="sidebar">
 				<ButtonGroup>
 					<Button variant="dark">{course.title}</Button>
-					<Button
-						onClick={() => {
-							setShowCreateMod(true);
-						}}
-						variant="dark"
-						title="create a course"
-					>
-						<VscAdd />
-					</Button>
+					{state.loggedIn ? (
+						<Button
+							onClick={() => {
+								setShowCreateMod(true);
+							}}
+							variant="dark"
+							title="create a course"
+						>
+							<VscAdd />
+						</Button>
+					) : (
+						""
+					)}
 				</ButtonGroup>
 				{mods.map((mod, index) => (
 					<DropDownItem

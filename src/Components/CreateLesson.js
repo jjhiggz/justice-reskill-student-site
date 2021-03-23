@@ -13,7 +13,6 @@ export default function CreateLearningObjective(props) {
 	const [githubLinkInput, setGithubLinkInput] = useState("");
 	const [docLinkInput, setDocLinkInput] = useState("");
 	const [slidesLinkInput, setSlidesLinkInput] = useState("");
-
 	const [isLoading, setIsLoading] = useState(false);
 
 	useEffect(() => {

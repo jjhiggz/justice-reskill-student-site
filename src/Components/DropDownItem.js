@@ -1,8 +1,9 @@
 import { VscAdd } from "react-icons/vsc";
 import { IoTrashBin } from "react-icons/io5";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import { LinkContainer } from "react-router-bootstrap";
 import { makeQueryString } from "../Functions/helpers";
+import { AppState } from "../App";
 
 import axios from "axios";
 const dbURL = "https://justice-reskill.herokuapp.com";
@@ -10,12 +11,11 @@ const dbURL = "https://justice-reskill.herokuapp.com";
 export default function DropDownItem({
 	mod,
 	setShowCreateLearningObjective,
-	setShowCreateLesson,
-	setLearningObjective,
 	setMod,
 }) {
 	const [isOpen, setIsOpen] = useState(false);
 	const [learningObjectives, setLearningObjectives] = useState([]);
+	const { state, dispatch } = useContext(AppState);
 
 	useEffect(() => {
 		axios(`${dbURL}/mods/${mod.id}`)
@@ -36,13 +36,18 @@ export default function DropDownItem({
 						<h4 className="dropdown-button-text">{mod.title}</h4>
 					</div>
 				</LinkContainer>
-				<IoTrashBin />
-				<VscAdd
-					onClick={() => {
-						setMod(mod);
-						setShowCreateLearningObjective(true);
-					}}
-				/>
+				{state.loggedIn ? <IoTrashBin /> : ""}
+
+				{state.loggedIn ? (
+					<VscAdd
+						onClick={() => {
+							setMod(mod);
+							setShowCreateLearningObjective(true);
+						}}
+					/>
+				) : (
+					""
+				)}
 
 				<div className={`dropdown-items-container ${!isOpen ? "hide" : ""}`}>
 					<p>learning objectives: </p>
@@ -60,13 +65,16 @@ export default function DropDownItem({
 							<div>
 								<p className="dropdown-item">
 									{learningObjective.title}{" "}
-									<IoTrashBin
-										onClick={(event) => {
-											event.stopPropagation();
-											console.log("deleting");
-											console.log(learningObjective.title);
-										}}
-									/>
+									{state.loggedIn ? (
+										<IoTrashBin
+											onClick={(event) => {
+												event.stopPropagation();
+												console.log(learningObjective.title);
+											}}
+										/>
+									) : (
+										""
+									)}
 								</p>
 							</div>
 						</LinkContainer>

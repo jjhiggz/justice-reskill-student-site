@@ -67,7 +67,7 @@ export default function CreateLearningObjective(props) {
 								setTitleInput(event.target.value);
 							}}
 							type="text"
-							placeholder="Enter a title for this mod"
+							placeholder="Enter a title for this learning objective"
 						/>
 					</Form.Group>
 					<Form.Group controlId="exampleForm.ControlTextarea1">
@@ -79,7 +79,7 @@ export default function CreateLearningObjective(props) {
 								setDescriptionInput(event.target.value);
 							}}
 							type="text"
-							placeholder="Enter a title for this mod"
+							placeholder="Enter a title for this learning objective"
 						/>
 					</Form.Group>
 					<Form.Group controlId="text"></Form.Group>
