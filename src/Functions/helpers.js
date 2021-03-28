@@ -61,7 +61,29 @@ export function getIdNo(param) {
 export function makeQueryParams({ key, object }) {
 	return key + "=" + object.title.split(" ").join("-") + "-" + object.id;
 }
+export function toCamelCase(str) {
+	return str
+		.replace(/\s(.)/g, function($1) {
+			return $1.toUpperCase();
+		})
+		.replace(/\s/g, "")
+		.replace(/^(.)/, function($1) {
+			return $1.toLowerCase();
+		});
+}
 
 export function makeQueryString() {
 	return [...arguments].map(makeQueryParams).join("&");
+}
+
+export function toPascalCase(input) {
+	return `${input}`
+		.replace(new RegExp(/[-_]+/, "g"), " ")
+		.replace(new RegExp(/[^\w\s]/, "g"), "")
+		.replace(
+			new RegExp(/\s+(.)(\w+)/, "g"),
+			($1, $2, $3) => `${$2.toUpperCase() + $3.toLowerCase()}`
+		)
+		.replace(new RegExp(/\s/, "g"), "")
+		.replace(new RegExp(/\w/), (s) => s.toUpperCase());
 }

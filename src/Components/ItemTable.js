@@ -1,5 +1,6 @@
 import Table from "react-bootstrap/Table";
 import Button from "react-bootstrap/Button";
+import ButtonGroup from "react-bootstrap/Button";
 import { GoMarkGithub } from "react-icons/go";
 import { FiYoutube } from "react-icons/fi";
 import { CgLoadbarDoc } from "react-icons/cg";
@@ -8,13 +9,15 @@ import { IoTrashBin } from "react-icons/io5";
 import { VscAdd } from "react-icons/vsc";
 import { AppState } from "../App";
 import { useContext } from "react";
+import { toPascalCase, toCamelCase } from "../Functions/helpers";
 
-export default function Lessons({ lessons }) {
+export default function ItemTable({ itemName, items, learningObjective }) {
 	const { state, dispatch } = useContext(AppState);
 	return (
-		<div className="lessons-container">
-			{lessons.length > 0 ? (
-				<Table className="lessons-table" striped bordered hover>
+		<div className="items-container">
+			<h2>{toPascalCase(itemName)}s</h2>
+			{items.length > 0 ? (
+				<Table className="items-table" striped bordered hover>
 					<thead>
 						<tr>
 							<th>Title</th>
@@ -26,12 +29,12 @@ export default function Lessons({ lessons }) {
 						</tr>
 					</thead>
 					<tbody>
-						{lessons.map((lesson) => (
+						{items.map((item) => (
 							<tr>
-								<td>{lesson.title}</td>
+								<td>{item.title}</td>
 								<td>
-									{lesson.youtube_link ? (
-										<a href={lesson.youtube_link}>
+									{item.youtube_link ? (
+										<a href={item.youtube_link}>
 											<FiYoutube />
 										</a>
 									) : (
@@ -39,8 +42,8 @@ export default function Lessons({ lessons }) {
 									)}
 								</td>
 								<td>
-									{lesson.github_link ? (
-										<a href={lesson.github_link}>
+									{item.github_link ? (
+										<a href={item.github_link}>
 											<GoMarkGithub />
 										</a>
 									) : (
@@ -48,8 +51,8 @@ export default function Lessons({ lessons }) {
 									)}
 								</td>
 								<td>
-									{lesson.doc_link ? (
-										<a href={lesson.doc_link}>
+									{item.doc_link ? (
+										<a href={item.doc_link}>
 											<CgLoadbarDoc />
 										</a>
 									) : (
@@ -57,22 +60,25 @@ export default function Lessons({ lessons }) {
 									)}
 								</td>
 								<td>
-									{lesson.slides ? (
-										<a href={lesson.slides_link}>
+									{item.slides ? (
+										<a href={item.slides_link}>
 											<FaFilePowerpoint />
 										</a>
 									) : (
 										"---"
 									)}
 								</td>
-								<td>{lesson.description}</td>
+								<td>{item.description}</td>
 								{state.loggedIn ? (
 									<td>
 										<Button variant="danger">
 											<IoTrashBin
-												onClick={() =>
-													dispatch({ type: "setLesson", payload: lesson })
-												}
+												onClick={() => {
+													dispatch({
+														type: "showDeleteItem",
+														payload: { item: item, itemName: itemName },
+													});
+												}}
 											/>
 										</Button>
 									</td>
@@ -83,6 +89,25 @@ export default function Lessons({ lessons }) {
 						))}
 					</tbody>
 				</Table>
+			) : (
+				<h4>There are no {itemName}s to show</h4>
+			)}
+			{state.loggedIn ? (
+				<ButtonGroup>
+					<Button
+						onClick={() => {
+							dispatch({
+								type: "showCreateItem",
+								payload: {
+									itemName: itemName,
+									learningObjective: learningObjective,
+								},
+							});
+						}}
+					>
+						<VscAdd />
+					</Button>
+				</ButtonGroup>
 			) : (
 				""
 			)}

@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import Lessons from "../Components/Lessons";
+import ItemTable from "../Components/ItemTable";
 import axios from "axios";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
@@ -32,7 +32,7 @@ export default function SearchForLesson() {
 					selectedSearchItems={selectedLessons}
 					setSelectedSearchItems={setSelectedLessons}
 				/>
-				<Lessons lessons={selectedLessons} />
+				<ItemTable itemName={"lesson"} items={selectedLessons} />
 			</section>
 		</div>
 	);

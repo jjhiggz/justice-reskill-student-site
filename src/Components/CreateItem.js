@@ -1,10 +1,14 @@
 import { Modal, Form, Button } from "react-bootstrap";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
+import { AppState } from "../App";
+
 import axios from "axios";
 
 const dbURL = "https://justice-reskill.herokuapp.com";
 
-export default function CreateLearningObjective(props) {
+export default function CreateItem(props) {
+	const { state, dispatch } = useContext(AppState);
+	const { itemName, learningObjective } = state;
 	const [showError, setShowError] = useState(false);
 	const [titleInput, setTitleInput] = useState("");
 	const [descriptionInput, setDescriptionInput] = useState("");
@@ -25,12 +29,13 @@ export default function CreateLearningObjective(props) {
 
 	function handleSubmit(event) {
 		setIsLoading(true);
+		alert(itemName);
 		axios
 			.post(
-				dbURL + "/lessons",
+				dbURL + "/" + itemName + "s",
 				{
-					lesson: {
-						learning_objective_id: props.learningObjective.id,
+					[itemName]: {
+						learning_objective_id: learningObjective.id,
 						title: titleInput,
 						drive_link: driveLinkInput,
 						youtube_link: youtubeLinkInput,
@@ -48,10 +53,10 @@ export default function CreateLearningObjective(props) {
 			)
 			.then((response) => response.data)
 			.then((newMod) => {
-				// ! Eventually add code to add this mod in responsively
-				window.location.reload(false);
+				// todo:  Eventually add code to add this mod in responsively
+				// window.location.reload(false);
 			})
-			.catch((error) => console.log(error));
+			.catch((error) => console.error(error));
 	}
 
 	return (
@@ -63,7 +68,7 @@ export default function CreateLearningObjective(props) {
 		>
 			<Modal.Header closeButton>
 				<Modal.Title id="contained-modal-title-vcenter">
-					Create Lesson for: {props.learningObjective.title}
+					Create {itemName} for: {learningObjective.title}
 				</Modal.Title>
 			</Modal.Header>
 			<Modal.Body>
@@ -75,7 +80,7 @@ export default function CreateLearningObjective(props) {
 								setTitleInput(event.target.value);
 							}}
 							type="text"
-							placeholder="Enter a title for this lesson"
+							placeholder={`Enter a title for this ${itemName}`}
 						/>
 					</Form.Group>
 					<Form.Group controlId="text">
@@ -137,7 +142,7 @@ export default function CreateLearningObjective(props) {
 								setDescriptionInput(event.target.value);
 							}}
 							type="text"
-							placeholder="Enter a short description for this lesson here"
+							placeholder={`Enter a short description for this ${itemName} here`}
 						/>
 					</Form.Group>
 					<Form.Group controlId="text"></Form.Group>

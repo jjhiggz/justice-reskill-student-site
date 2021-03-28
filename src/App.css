@@ -36,7 +36,7 @@
 	transform: scale(2);
 }
 
-.lessons-table td {
+.items-table td {
 	text-align: center;
 }
 
@@ -109,10 +109,15 @@
 	width: 100%;
 }
 
+.dropdown-item-container {
+	width: 180px;
+	background-color: #f1f1f1;
+}
+
 .dropdown-item {
-	width: 100px;
+	width: 160;
 	font-size: 12px;
-	word-wrap: break-word;
+	white-space: normal;
 }
 
 .dropdown-container {

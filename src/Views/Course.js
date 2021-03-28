@@ -7,10 +7,13 @@ import LearningObjective from "../Components/LearningObjective";
 import { VscAdd } from "react-icons/vsc";
 import { ButtonGroup, Button } from "react-bootstrap";
 import DropDownItem from "../Components/DropDownItem";
-import DestroyLesson from "../Components/DestroyLesson";
+import DestroyItem from "../Components/DestroyItem";
+import DestroyLearningObjective from "../Components/DestroyLearningObjective";
+import DestroyMod from "../Components/DestroyMod";
 import CreateMod from "../Components/CreateMod";
 import CreateLearningObjective from "../Components/CreateLearningObjective";
-import CreateLesson from "../Components/CreateLesson";
+import CreateItem from "../Components/CreateItem";
+
 import { AppState } from "../App";
 const dbURL = "https://justice-reskill.herokuapp.com";
 
@@ -24,19 +27,6 @@ export default function Course() {
 
 	const [course, setCourse] = useState({});
 	const [mods, setMods] = useState([]);
-	const [showCreateMod, setShowCreateMod] = useState(false);
-	const [
-		showCreateLearningObjective,
-		setShowCreateLearningObjective,
-	] = useState(false);
-
-	const [showCreateLesson, setShowCreateLesson] = useState(false);
-
-	const [learningObjective, setLearningObjective] = useState({
-		title: "Please Select a Learning Objective",
-		description: "Once you select a learning objective this page will populate",
-		lessons: [],
-	});
 
 	const [mod, setMod] = useState({
 		title: "Loading",
@@ -61,7 +51,10 @@ export default function Course() {
 			axios(`${dbURL}/learning_objectives/${learningObjectiveId}`)
 				.then((response) => response.data)
 				.then((learningObjective) => {
-					setLearningObjective(learningObjective);
+					dispatch({
+						type: "setLearningObjective",
+						payload: learningObjective,
+					});
 				});
 		}
 	}, [learningObjectiveId]);
@@ -70,26 +63,39 @@ export default function Course() {
 		<div className="page-content-container">
 			<section className="right-of-sidebar">
 				<CreateMod
-					onHide={setShowCreateMod}
+					onHide={() => dispatch({ type: "hideCreateMod" })}
 					course={course}
-					show={showCreateMod}
+					show={state.showCreateMod}
 				/>
-				<CreateLesson
-					learningObjective={learningObjective}
-					onHide={() => dispatch({ type: "hideCreateLesson" })}
-					show={state.showCreateLesson}
+				<DestroyMod
+					show={state.showDeleteMod}
+					onHide={() => dispatch({ type: "hideDeleteMod", payload: {} })}
+					mod={state.item}
+				/>
+				<CreateItem
+					learningObjective={state.learningObjective}
+					onHide={() => dispatch({ type: "hideCreateItem" })}
+					show={state.showCreateItem}
+				/>
+				<DestroyItem
+					show={state.showDeleteItem}
+					onHide={() => dispatch({ type: "hideDeleteItem" })}
 				/>
 				<CreateLearningObjective
 					mod={mod}
-					onHide={setShowCreateLearningObjective}
-					show={showCreateLearningObjective}
+					onHide={() => {
+						dispatch({ type: "hideCreateLearningObjective" });
+					}}
+					show={state.showCreateLearningObjective}
 				/>
-				<DestroyLesson
-					show={Object.keys(state.lesson).length > 0}
-					onHide={() => dispatch({ type: "setLesson", payload: {} })}
-					lesson={state.lesson}
+				<DestroyLearningObjective
+					show={state.showDeleteLearningObjective}
+					onHide={() =>
+						dispatch({ type: "hideDeleteLearningObjective", payload: {} })
+					}
+					learningObjective={state.learningObjective}
 				/>
-				<LearningObjective learningObjective={learningObjective} />
+				<LearningObjective learningObjective={state.learningObjective} />
 			</section>
 
 			<section id="sidebar">
@@ -98,10 +104,10 @@ export default function Course() {
 					{state.loggedIn ? (
 						<Button
 							onClick={() => {
-								setShowCreateMod(true);
+								dispatch({ type: "showCreateMod" });
 							}}
 							variant="dark"
-							title="create a course"
+							title="Create a Mod"
 						>
 							<VscAdd />
 						</Button>
@@ -110,14 +116,7 @@ export default function Course() {
 					)}
 				</ButtonGroup>
 				{mods.map((mod, index) => (
-					<DropDownItem
-						key={mod.id}
-						mod={mod}
-						setShowCreateLearningObjective={setShowCreateLearningObjective}
-						setShowCreateLesson={setShowCreateLesson}
-						setLearningObjective={setLearningObjective}
-						setMod={setMod}
-					/>
+					<DropDownItem key={mod.id} mod={mod} setMod={setMod} />
 				))}
 			</section>
 		</div>

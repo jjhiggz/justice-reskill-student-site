@@ -59,16 +59,16 @@ export default function Header() {
 						})}
 					</NavDropdown>
 				</Nav>
-				<div>
+				{/* <div>
 					<Button
 						onClick={() => dispatch({ type: "showSignIn" })}
 						variant="outline-success"
 					>
 						Sign In
 					</Button>
-				</div>
+				</div> */}
 
-				<div>
+				{/* <div>
 					<Button
 						onClick={() => {
 							dispatch({ type: "showSignUp" });
@@ -77,7 +77,7 @@ export default function Header() {
 					>
 						Sign Up( Teachers Only )
 					</Button>
-				</div>
+				</div> */}
 			</Navbar.Collapse>
 		</Navbar>
 	);

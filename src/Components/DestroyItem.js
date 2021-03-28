@@ -1,12 +1,17 @@
 import { Modal, Form, Button } from "react-bootstrap";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useContext } from "react";
+import { AppState } from "../App";
 import axios from "axios";
+import LearningObjective from "./LearningObjective";
 
 const dbURL = "https://justice-reskill.herokuapp.com";
 
-export default function DestroyLesson(props) {
+export default function DestroyItem(props) {
+	const { state, dispatch } = useContext(AppState);
 	const [showError, setShowError] = useState(false);
 	const [isLoading, setIsLoading] = useState(false);
+
+	// const { item, itemName } = state;
 
 	useEffect(() => {
 		if (showError) {
@@ -19,7 +24,7 @@ export default function DestroyLesson(props) {
 	function handleSubmit(event) {
 		setIsLoading(true);
 		axios
-			.delete(dbURL + "/lessons/" + props.lesson.id, {
+			.delete(dbURL + "/" + state.itemName + "s" + "/" + state.item.id, {
 				headers: {
 					"Content-Type": "application/json",
 				},
@@ -43,13 +48,13 @@ export default function DestroyLesson(props) {
 				<Modal.Title id="contained-modal-title-vcenter">
 					Are you sure that you want to delete this lesson?
 				</Modal.Title>
-				<Modal.Title>{props.lesson.title}</Modal.Title>
+				<Modal.Title>{state.item.title}</Modal.Title>
 			</Modal.Header>
 			<Modal.Body>
 				<Form onSubmit={handleSubmit}>
 					<Form.Group controlId="text"></Form.Group>
 					<Button variant="primary" type="submit">
-						Submit
+						Delete {LearningObjective.title}
 					</Button>
 				</Form>
 			</Modal.Body>

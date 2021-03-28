@@ -18,11 +18,27 @@ function App() {
 	const initialState = {
 		showSignUp: false,
 		showSignIn: false,
-		showCreateLesson: false,
+		showCreateItem: false,
 		showCreateLearningObjective: false,
 		showCreateModule: false,
-		loggedIn: true,
+		showDeleteItem: false,
+		showDeleteLearningObjective: false,
+		showDeleteMod: false,
+		loggedIn: false,
 		lesson: {},
+		mod: {
+			title: "Default mod",
+			id: "",
+		},
+		item: {},
+		itemName: {},
+		learningObjective: {
+			title: "Please Select a Learning Objective",
+			description:
+				"Once you select a learning objective this page will populate",
+			lessons: [],
+		},
+		learningObjectives: [],
 	};
 	const [state, dispatch] = useReducer(reducer, initialState);
 	return (
