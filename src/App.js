@@ -24,7 +24,7 @@ function App() {
 		showDeleteItem: false,
 		showDeleteLearningObjective: false,
 		showDeleteMod: false,
-		loggedIn: true,
+		loggedIn: false,
 		lesson: {},
 		mod: {
 			title: "Default mod",
