@@ -29,7 +29,7 @@ export default function CreateItem(props) {
 
 	function handleSubmit(event) {
 		setIsLoading(true);
-		alert(itemName);
+		// alert(driveLinkInput);
 		axios
 			.post(
 				dbURL + "/" + itemName + "s",

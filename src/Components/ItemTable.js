@@ -23,8 +23,7 @@ export default function ItemTable({ itemName, items, learningObjective }) {
 							<th>Title</th>
 							<th>YouTube</th>
 							<th>Github</th>
-							<th>Doc</th>
-							<th>Slides</th>
+							<th>Link</th>
 							<th>Description</th>
 						</tr>
 					</thead>
@@ -51,17 +50,8 @@ export default function ItemTable({ itemName, items, learningObjective }) {
 									)}
 								</td>
 								<td>
-									{item.doc_link ? (
-										<a href={item.doc_link}>
-											<CgLoadbarDoc />
-										</a>
-									) : (
-										"---"
-									)}
-								</td>
-								<td>
-									{item.slides ? (
-										<a href={item.slides_link}>
+									{item.drive_link ? (
+										<a href={item.drive_link}>
 											<FaFilePowerpoint />
 										</a>
 									) : (

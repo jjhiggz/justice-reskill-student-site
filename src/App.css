@@ -48,8 +48,8 @@
 	z-index: 1;
 	top: 0;
 	left: 0;
-	border: 5px outset purple;
-	background-color: purple;
+	border: 5px outset black;
+	background-color: black;
 	color: white;
 	overflow-x: hidden;
 }
@@ -95,13 +95,16 @@
 	padding: 0px 10px;
 }
 
+nav {
+	color: white;
+}
 /* Dropdown container (hidden by default). Optional: add a lighter background color and some left padding to change the design of the dropdown content */
 .dropdown-items-container {
 	padding-left: 8px;
 	padding-bottom: 0px;
 	border: 3px inset purple;
 	color: white;
-	background-color: #815f81;
+	background-color: darkolivegreen;
 	width: 100%;
 }
 

@@ -4,7 +4,7 @@ import Button from "react-bootstrap/Button";
 import Navbar from "react-bootstrap/Navbar";
 import Nav from "react-bootstrap/Nav";
 import { LinkContainer } from "react-router-bootstrap";
-import justiceReskillLogo from "../Assets/justicereskill_logo.png";
+import higgzCodeLogo from "../Assets/HiggzCodeLogo.png";
 import { useContext, useEffect, useState } from "react";
 import axios from "axios";
 import { AppState } from "../App";
@@ -21,15 +21,15 @@ export default function Header() {
 	}, []);
 
 	return (
-		<Navbar bg="light" expand="lg" fixed="top">
-			<Navbar bg="light">
+		<Navbar bg="dark" variant="dark" expand="lg" fixed="top">
+			<Navbar bg="dark">
 				<LinkContainer to="/">
 					<Navbar.Brand>
 						<img
-							src={justiceReskillLogo}
+							src={higgzCodeLogo}
 							height="40"
 							className="d-inline-block align-top"
-							alt="Justice Reskill Logo"
+							alt="Higgz Code Logo"
 						/>
 					</Navbar.Brand>
 				</LinkContainer>

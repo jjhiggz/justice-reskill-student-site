@@ -55,7 +55,12 @@ export default function DropDownItem({ mod }) {
 					""
 				)}
 
-				<div className={`dropdown-items-container ${!isOpen ? "hide" : ""}`}>
+				<div
+					className={
+						// state.mod.id === mod.id
+						`dropdown-items-container ${!isOpen ? "hide" : ""}`
+					}
+				>
 					<p>learning objectives: </p>
 					{(fullMod.learning_objectives ? fullMod.learning_objectives : []).map(
 						(learningObjective, index) => (
