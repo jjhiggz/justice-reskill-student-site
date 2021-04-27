@@ -3,13 +3,12 @@ import Button from "react-bootstrap/Button";
 import ButtonGroup from "react-bootstrap/Button";
 import { GoMarkGithub } from "react-icons/go";
 import { FiYoutube } from "react-icons/fi";
-import { CgLoadbarDoc } from "react-icons/cg";
 import { FaFilePowerpoint } from "react-icons/fa";
 import { IoTrashBin } from "react-icons/io5";
 import { VscAdd } from "react-icons/vsc";
 import { AppState } from "../App";
 import { useContext } from "react";
-import { toPascalCase, toCamelCase } from "../Functions/helpers";
+import { toPascalCase } from "../Functions/helpers";
 
 export default function ItemTable({ itemName, items, learningObjective }) {
 	const { state, dispatch } = useContext(AppState);
@@ -29,7 +28,7 @@ export default function ItemTable({ itemName, items, learningObjective }) {
 					</thead>
 					<tbody>
 						{items.map((item) => (
-							<tr>
+							<tr key={"tr-" + item.id}>
 								<td>{item.title}</td>
 								<td>
 									{item.youtube_link ? (
@@ -41,25 +40,21 @@ export default function ItemTable({ itemName, items, learningObjective }) {
 									)}
 								</td>
 								<td>
-									{item.github_link ? (
+									{item.github_link && (
 										<a href={item.github_link}>
 											<GoMarkGithub />
 										</a>
-									) : (
-										"---"
 									)}
 								</td>
 								<td>
-									{item.drive_link ? (
+									{item.drive_link && (
 										<a href={item.drive_link}>
 											<FaFilePowerpoint />
 										</a>
-									) : (
-										"---"
 									)}
 								</td>
 								<td>{item.description}</td>
-								{state.loggedIn ? (
+								{state.loggedIn && (
 									<td>
 										<Button variant="danger">
 											<IoTrashBin
@@ -72,8 +67,6 @@ export default function ItemTable({ itemName, items, learningObjective }) {
 											/>
 										</Button>
 									</td>
-								) : (
-									""
 								)}
 							</tr>
 						))}
@@ -82,7 +75,7 @@ export default function ItemTable({ itemName, items, learningObjective }) {
 			) : (
 				<h4>There are no {itemName}s to show</h4>
 			)}
-			{state.loggedIn ? (
+			{state.loggedIn && (
 				<ButtonGroup>
 					<Button
 						onClick={() => {
@@ -98,8 +91,6 @@ export default function ItemTable({ itemName, items, learningObjective }) {
 						<VscAdd />
 					</Button>
 				</ButtonGroup>
-			) : (
-				""
 			)}
 		</div>
 	);

@@ -20,7 +20,7 @@ const dbURL = "https://justice-reskill.herokuapp.com";
 export default function Course() {
 	const { state, dispatch } = useContext(AppState);
 	const queryParams = useQuery();
-	const courseIdNo = getIdNo(useParams().courseId);
+	const courseIdNo = 18;
 	const learningObjectiveId = queryParams.get("learning-objective")
 		? getIdNo(queryParams.get("learning-objective"))
 		: null;
@@ -99,9 +99,9 @@ export default function Course() {
 			</section>
 
 			<section id="sidebar">
-				<ButtonGroup>
-					<Button variant="dark">{course.title}</Button>
-					{state.loggedIn ? (
+				{state.loggedIn && (
+					<ButtonGroup>
+						<Button variant="dark">{"Add Mod"}</Button>
 						<Button
 							onClick={() => {
 								dispatch({ type: "showCreateMod" });
@@ -111,10 +111,8 @@ export default function Course() {
 						>
 							<VscAdd />
 						</Button>
-					) : (
-						""
-					)}
-				</ButtonGroup>
+					</ButtonGroup>
+				)}
 				{mods.map((mod, index) => (
 					<DropDownItem key={mod.id} mod={mod} setMod={setMod} />
 				))}

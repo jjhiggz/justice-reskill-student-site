@@ -32,17 +32,15 @@ export default function DropDownItem({ mod }) {
 						<h4 className="dropdown-button-text">{mod.title}</h4>
 					</div>
 				</LinkContainer>
-				{state.loggedIn ? (
+				{state.loggedIn && (
 					<IoTrashBin
 						onClick={() => {
 							dispatch({ type: "showDeleteMod", payload: mod });
 						}}
 					/>
-				) : (
-					""
 				)}
 
-				{state.loggedIn ? (
+				{state.loggedIn && (
 					<VscAdd
 						onClick={() => {
 							dispatch({
@@ -51,16 +49,9 @@ export default function DropDownItem({ mod }) {
 							});
 						}}
 					/>
-				) : (
-					""
 				)}
 
-				<div
-					className={
-						// state.mod.id === mod.id
-						`dropdown-items-container ${!isOpen ? "hide" : ""}`
-					}
-				>
+				<div className={`dropdown-items-container ${!isOpen && "hide"}`}>
 					<p>learning objectives: </p>
 					{(fullMod.learning_objectives ? fullMod.learning_objectives : []).map(
 						(learningObjective, index) => (
@@ -77,7 +68,7 @@ export default function DropDownItem({ mod }) {
 								<div className="dropdown-item-container">
 									<p className="dropdown-item">
 										{learningObjective.title}
-										{state.loggedIn ? (
+										{state.loggedIn && (
 											<IoTrashBin
 												onClick={(event) => {
 													event.stopPropagation();
@@ -87,8 +78,6 @@ export default function DropDownItem({ mod }) {
 													});
 												}}
 											/>
-										) : (
-											""
 										)}
 									</p>
 								</div>

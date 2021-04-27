@@ -7,32 +7,32 @@ import SearchForm from "../Components/SearchForm";
 
 const dbURL = "https://justice-reskill.herokuapp.com";
 
-export default function SearchForLesson() {
-	const [lessons, setLessons] = useState([]);
-	const [selectedLessons, setSelectedLessons] = useState([]);
+export default function SearchForItem({ itemName }) {
+	const [items, setItems] = useState([]);
+	const [selectedItems, setSelectedItems] = useState([]);
 
 	// load resources when component mounts
 	useEffect(() => {
 		axios
-			.get(`${dbURL}/lessons`)
+			.get(`${dbURL}/${itemName}s`)
 			.then((results) => results.data)
-			.then((lessons) => {
-				setLessons(lessons);
-				setSelectedLessons(lessons);
+			.then((items) => {
+				setItems(items);
+				setSelectedItems(items);
 			});
-	}, []);
+	}, [itemName]);
 
 	return (
 		<div id="search-form-container">
 			<section className="page-content-container" as={Col} sm={2} md={3} lg="6">
-				<h3 as={Row}>Search for a Lesson</h3>
+				<h3 as={Row}>Search for a {itemName}</h3>
 				<SearchForm
 					as={Col}
-					searchItems={lessons}
-					selectedSearchItems={selectedLessons}
-					setSelectedSearchItems={setSelectedLessons}
+					searchItems={items}
+					selectedSearchItems={selectedItems}
+					setSelectedSearchItems={setSelectedItems}
 				/>
-				<ItemTable itemName={"lesson"} items={selectedLessons} />
+				<ItemTable itemName={itemName} items={selectedItems} />
 			</section>
 		</div>
 	);

@@ -2,7 +2,7 @@ import { HashRouter, Switch, Route } from "react-router-dom";
 import reducer from "./reducer";
 import React, { useReducer, useState } from "react";
 import Home from "./Views/Home";
-import SearchForLesson from "./Views/SearchForLesson";
+import SearchForItem from "./Views/SearchForItem";
 import SearchForVideo from "./Views/SearchForVideo";
 import Header from "./Components/Header";
 import Course from "./Views/Course";
@@ -21,6 +21,7 @@ function App() {
 		showCreateItem: false,
 		showCreateLearningObjective: false,
 		showCreateModule: false,
+		showCreateVideo: false,
 		showDeleteItem: false,
 		showDeleteLearningObjective: false,
 		showDeleteMod: false,
@@ -52,10 +53,18 @@ function App() {
 					/>
 					<section id="main-container">
 						<Switch>
-							<Route exact path="/" component={Home} />
-							<Route path="/course/:courseId" component={Course} />
+							<Route exact path="/" component={Course} />
+							{/* <Route path="/course/:courseId" component={Course} /> */}
 							<Route path="/search-for-video" component={SearchForVideo} />
-							<Route path="/search-for-lesson" component={SearchForLesson} />
+							<Route path="/search-for-lesson">
+								<SearchForItem itemName="lesson" />
+							</Route>
+							<Route path="/search-for-assessment">
+								<SearchForItem itemName="assessment" />
+							</Route>
+							<Route path="/search-for-resource">
+								<SearchForItem itemName="resource" />
+							</Route>
 						</Switch>
 					</section>
 				</HashRouter>

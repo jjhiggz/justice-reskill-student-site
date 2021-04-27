@@ -70,8 +70,6 @@ function reducer(state, action) {
 				showCreateMod: false,
 			};
 		},
-
-		// showDeleteItem() {},
 		showDeleteLesson() {
 			// ! replace with show delete item
 			return { ...state, lesson: action.payload, showDelete: true };
@@ -112,6 +110,18 @@ function reducer(state, action) {
 			return {
 				...state,
 				learningObjectives: [...state.learningObjectives, action.payload],
+			};
+		},
+		showCreateVideo() {
+			return {
+				...state,
+				showCreateVideo: true,
+			};
+		},
+		hideCreateVideo() {
+			return {
+				...state,
+				showCreateVideo: false,
 			};
 		},
 		default() {
